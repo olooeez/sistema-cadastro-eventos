@@ -1,0 +1,48 @@
+# Ignorar diretórios
+vendor/
+node_modules/
+
+# Ignorar arquivos de configuração específicos do ambiente
+.env
+.env.local
+.env.php
+.env.development
+.env.production
+.env.ini
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de cache
+/cache/
+
+# Ignorar arquivos gerados automaticamente
+composer.lock
+package-lock.json
+yarn.lock
+
+# Ignorar diretório de uploads (exemplo)
+/uploads/
+
+# Ignorar arquivos de banco de dados (exemplo)
+/database.sql
+
+# Ignorar arquivos de backup (exemplo)
+*.bak
+
+# Ignorar arquivos de IDE
+.idea/
+.vscode/
+
+# Ignorar arquivos temporários
+*.tmp
+
+# Ignorar arquivos de imagem em cache
+*.png.cache
+*.jpg.cache
+*.jpeg.cache
+*.gif.cache
+
+# Ignorar arquivos de vídeo em cache
+*.mp4.cache
+*.mov.cache
