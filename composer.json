@@ -1,0 +1,20 @@
+{
+	"name": "olooeez/sistema-cadastro-eventos",
+	"description": "Um sistema de eventos feito para quem vai participar e coordenar os eventos",
+	"type": "project",
+	"license": "MIT",
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Luiz Felipe",
+			"email": "luizfelipecastrovb@gmail.com"
+		}
+	],
+	"require": {
+		"twig/twig": "^3.6"
+	}
+}
