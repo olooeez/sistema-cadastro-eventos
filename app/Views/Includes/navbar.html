@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/sistema-cadastro-eventos/dashboard/index/0">Eventando</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/sistema-cadastro-eventos/dashboard/index/0">
+            <i class="bi bi-house"></i>
+            Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          {% if user["user_type"] == 'organizer' %}
+          <a class="nav-link" href="/sistema-cadastro-eventos/event/create">
+            <i class="bi bi-plus"></i>
+            Criar evento
+          </a>
+          {% elseif user["user_type"] == 'participant' %}
+          <a class="nav-link" href="/sistema-cadastro-eventos/user/{{ user_id }}">
+            <i class="bi bi-bookmark"></i>
+            Meus eventos
+          </a>
+          {% else %}
+          <a class="nav-link" href="/sistema-cadastro-eventos/admin/dashboard">
+            <i class="bi bi-nut"></i>
+            Painel do admin
+          </a>
+          {% endif %}
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i>
+            {{ user["name"] }}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sistema-cadastro-eventos/user/{{ user_id }}">Meu perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/sistema-cadastro-eventos/user/logout">Sair do perfil</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Nome do evento" aria-label="Search">
+      <button class="btn btn-primary" type="submit">Pesquisar</button>
+    </form>
+  </div>
+</nav>
