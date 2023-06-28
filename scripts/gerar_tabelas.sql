@@ -21,9 +21,11 @@ CREATE TABLE event (
   time TIME NOT NULL,
   location VARCHAR(255) NOT NULL,
   category_id INT NOT NULL,
+  user_id INT NOT NULL,
   price DECIMAL(10, 2),
   images TEXT,
-  FOREIGN KEY (category_id) REFERENCES categorie(category_id)
+  FOREIGN KEY (category_id) REFERENCES categorie(category_id),
+  FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
 CREATE TABLE registration (

@@ -14,12 +14,11 @@ class LoginController
   public function check()
   {
     try {
-      $user = new UserModel;
-      $user->setEmail($_POST["email"]);
-      $user->setPassword($_POST["password"]);
-      $user->validateLogin();
+      $email = $_POST["email"];
+      $password = $_POST["password"];
+      UserModel::validateLogin($email, $password);
       header("Location: http://localhost/sistema-cadastro-eventos/dashboard");
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
       $_SESSION["message_error"] = array("message" => $e->getMessage(), "count" => 0);
       header("Location: http://localhost/sistema-cadastro-eventos/login");
     }

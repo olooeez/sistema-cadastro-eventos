@@ -2,19 +2,19 @@
 
 class DashboardController
 {
-  public function index()
+
+  public function index($page)
   {
     $loader = new \Twig\Loader\FilesystemLoader("app/Views");
     $twig = new \Twig\Environment($loader, ["auto_reload" => true]);
     $template = $twig->load("dashboard.html");
+    $pageToLoad = isset($page[0]) ? intval($page[0]) : 0;
+    $events = EventModel::getAllEventsByPage($pageToLoad);
     $parameters["user"] = $_SESSION["user"] ?? null;
-    return $template->render($parameters);
-  }
+    $parameters["events"] = $events;
+    $parameters["total_num_events"] = $events;
+    $parameters["current_page"] = $pageToLoad;
 
-  public function logout()
-  {
-    unset($_SESSION);
-    session_destroy();
-    header("Location: /sistema-cadastro-eventos/");
+    return $template->render($parameters);
   }
 }

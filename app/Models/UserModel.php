@@ -2,26 +2,20 @@
 
 use \Luiz\Database\Connection;
 
-class UserModel
+abstract class UserModel
 {
-  private $userId;
-  private $name;
-  private $email;
-  private $password;
-  private $userType;
-
-  public function validateLogin()
+  public static function validateLogin($email, $password)
   {
     $connection = Connection::get();
     $sql = "SELECT * FROM user WHERE email = :email";
     $stmt = $connection->prepare($sql);
-    $stmt->bindValue(":email", $this->email);
+    $stmt->bindValue(":email", $email);
     $stmt->execute();
 
     if ($stmt->rowCount()) {
       $result = $stmt->fetch();
 
-      if (password_verify($this->password, $result["password"])) {
+      if (password_verify($password, $result["password"])) {
         $_SESSION["user"] = $result;
       } else {
         throw new Exception("Senha icorreta");
@@ -31,39 +25,40 @@ class UserModel
     }
   }
 
-  public function insert()
+  public static function insert($name, $email, $password, $userType)
   {
     $connection = Connection::get();
     $sql = "INSERT INTO user (name, email, password, user_type) VALUES (:name, :email, :password, :user_type)";
     $stmt = $connection->prepare($sql);
-    $stmt->bindValue(":name", $this->name);
-    $stmt->bindValue(":email", $this->email);
-    $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+    $stmt->bindValue(":name", $name);
+    $stmt->bindValue(":email", $email);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt->bindValue(":password", $hashedPassword);
-    $stmt->bindValue(":user_type", $this->userType);
+    $stmt->bindValue(":user_type", $userType);
 
-    if ($this->alreadyInDB()) {
+    if (static::alreadyInDB($email)) {
       throw new Exception("E-mail digitado já está sendo usado!");
     }
 
     if ($stmt->execute()) {
-      $lastRegisterUser = $this->getLastInsertUser();
+      $lastRegisterUser = static::getLastInsertUser();
       $_SESSION["user"] = $lastRegisterUser;
     } else {
       throw new Exception("Registro inválido");
     }
   }
 
-  private function alreadyInDB() {
+  private static function alreadyInDB($email)
+  {
     $connection = Connection::get();
     $sql = "SELECT * FROM user WHERE email = :email";
     $stmt = $connection->prepare($sql);
-    $stmt->bindValue(":email", $this->email);
+    $stmt->bindValue(":email", $email);
     $stmt->execute();
     return $stmt->rowCount() > 0;
   }
 
-  private function getLastInsertUser()
+  private static function getLastInsertUser()
   {
     $connection = Connection::get();
     $userId = $connection->lastInsertId();
@@ -72,40 +67,5 @@ class UserModel
     $stmt->bindValue(":id", $userId);
     $stmt->execute();
     return $stmt->fetch();
-  }
-
-  public function setUserType($userType)
-  {
-    $this->userType = $userType;
-  }
-
-  public function setEmail($email)
-  {
-    $this->email = $email;
-  }
-
-  public function setName($name)
-  {
-    $this->name = $name;
-  }
-
-  public function setPassword($password)
-  {
-    $this->password = $password;
-  }
-
-  public function getEmail()
-  {
-    return $this->email;
-  }
-
-  public function getName()
-  {
-    return $this->name;
-  }
-
-  public function getPassword()
-  {
-    return $this->password;
   }
 }

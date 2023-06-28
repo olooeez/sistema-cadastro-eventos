@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;" data-bs-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block head %}
+  <link rel="stylesheet" href="/sistema-cadastro-eventos/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/sistema-cadastro-eventos/assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  {% endblock %}
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body class="d-flex flex-column" style="height: 100%;">
+  {{ include("Includes/navbar.html") }}
+  <div style="flex: 1 0 auto;">
+    {% block content %}
+      <h1>oi</h1>
+    {% endblock %}
+  </div>
+  {{ include("Includes/footer.html") }}
+  <script src="/sistema-cadastro-eventos/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="/sistema-cadastro-eventos/assets/js/jquery-3.7.0.min.js"></script>
+</body>
+
+</html>

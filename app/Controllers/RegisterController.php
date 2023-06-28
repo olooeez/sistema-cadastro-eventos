@@ -20,12 +20,11 @@ class RegisterController
         throw new Exception("A senhas não betem uma com a outra");
       }
 
-      $user = new UserModel;
-      $user->setName($_POST["name"]);
-      $user->setEmail($_POST["email"]);
-      $user->setPassword($_POST["password"]);
-      $user->setUserType("participant");
-      $user->insert();
+      $user = $_POST["name"];
+      $email = $_POST["email"];
+      $password = $_POST["password"];
+      $userType = $_POST["userType"];
+      UserModel::insert($user, $email, $password, $userType);
       header("Location: http://localhost/sistema-cadastro-eventos/dashboard");
     } catch (Exception $e) {
       $_SESSION["message_error"] = array("message" => $e->getMessage(), "count" => 0);

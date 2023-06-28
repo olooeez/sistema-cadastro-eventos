@@ -1,21 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/sistema-cadastro-eventos/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/sistema-cadastro-eventos/assets/css/style.css">
-  <title>Login</title>
-</head>
-
-<body>
+{% extends "Templates/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container">
   <header>
-    <h1>Bem vindo, {{ user["name"] }}!</h1>
-    <a href="/sistema-cadastro-eventos/dashboard/logout">Clique aqui para sair!</a>
+    <div class="d-flex justify-content-center mt-4">
+      <strong class="fs-3 fw-normal text-decoration-underline">Todos os eventos</strong>
+    </div>
   </header>
-  <script src="/sistema-cadastro-eventos/assets/js/bootstrap.bundle.min.js"></script>
-  <script src="/sistema-cadastro-eventos/assets/js/jquery-3.7.0.min.js"></script>
-</body>
-
-</html>
+  <section class="my-4 d-flex justify-content-evenly flex-wrap">
+    {% for event in events %}
+    <div class="card bg-body-tertiary m-3" style="width: 18rem;">
+      <img src="{{ event['images'][0] }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ event["title"] }}</h5>
+        <p class="card-text">{{ event["description"] }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-body-tertiary">
+            <i class="bi bi-alarm me-2"></i>
+            <span>{{ event["date"] }} às {{ event["time"] }}</span>
+          </li>
+          <li class="list-group-item bg-body-tertiary">
+            <i class="bi bi-geo-alt me-2"></i>
+            <span>{{ event["location"] }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="/sistema-cadastro-eventos/event/{{ event['event_id'] }}" class="btn btn-primary">Ver o evento</a>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <nav class="d-flex justify-content-center" style="margin: 25px;">
+    <ul class="pagination">
+      {% for i in 0..total_num_events %}
+      <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link" href="/sistema-cadastro-eventos/dashboard/index/{{ i }}">{{ i+1 }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}
