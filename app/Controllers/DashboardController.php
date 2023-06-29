@@ -10,11 +10,12 @@ class DashboardController
     $template = $twig->load("dashboard.html");
     $pageToLoad = isset($page[0]) ? intval($page[0]) : 0;
     $events = EventModel::getAllEventsByPage($pageToLoad);
+    $categories = CategoryModel::getAllCategories();
+    $parameters["categories"] = $categories;
     $parameters["user"] = $_SESSION["user"] ?? null;
     $parameters["events"] = $events;
-    $parameters["total_num_events"] = $events;
+    $parameters["total_num_events"] = count($events);
     $parameters["current_page"] = $pageToLoad;
-
     return $template->render($parameters);
   }
 }

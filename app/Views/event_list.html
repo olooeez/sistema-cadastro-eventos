@@ -1,15 +1,17 @@
 {% extends "Templates/base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Listagem de Eventos{% endblock %}
 {% block content %}
 <div class="container">
   {% if events is empty %}
   <div class="d-flex justify-content-center mt-4">
-    <strong class="fs-3 fw-normal text-decoration-underline">Não existem eventos no site ainda</strong>
+    <strong class="fs-3 fw-normal text-decoration-underline">Não existem eventos de '{{ search_name }}' na categoria '{{
+      category }}'</strong>
   </div>
   {% else %}
   <header>
     <div class="d-flex justify-content-center mt-4">
-      <strong class="fs-3 fw-normal text-decoration-underline">Todos os eventos</strong>
+      <strong class="fs-3 fw-normal text-decoration-underline">Todos os eventos de '{{ search_name }}' na categoria de
+        '{{ category }}'</strong>
     </div>
   </header>
   <section class="my-4 d-flex justify-content-evenly flex-wrap">
@@ -41,7 +43,7 @@
       {% if total_num_events > 1 %}
       {% for i in 0..total_num_events-1 %}
       <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
-          href="/sistema-cadastro-eventos/dashboard/index/{{ i }}">{{ i+1 }}</a>
+          href="/sistema-cadastro-eventos/event/list/{{ i }}">{{ i+1 }}</a>
       </li>
       {% endfor %}
       {% endif %}
