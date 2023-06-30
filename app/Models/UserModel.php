@@ -48,6 +48,16 @@ abstract class UserModel
     }
   }
 
+  public static function getUser($id)
+  {
+    $connection = Connection::get();
+    $sql = "SELECT * FROM user WHERE user_id = :id";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":id", $id);
+    $stmt->execute();
+    return $stmt->fetch();
+  }
+
   private static function alreadyInDB($email)
   {
     $connection = Connection::get();

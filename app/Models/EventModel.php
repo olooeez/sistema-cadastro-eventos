@@ -61,4 +61,59 @@ abstract class EventModel
 
     return $events;
   }
+
+  public static function getEventsRegistrated($userId)
+  {
+    $connection = Connection::get();
+    $sql = "SELECT event_id FROM registration WHERE user_id = :user_id";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":user_id", $userId);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
+
+  public static function getEventsByPage($eventsId, $page)
+  {
+    if (count($eventsId) == 0) {
+      return [];
+    }
+
+    $connection = Connection::get();
+    $offset = $page * 3;
+    $limit = 3;
+    $events = [];
+
+    $sql = "SELECT * FROM event WHERE event_id IN (";
+
+    $eventIdsCount = count($eventsId);
+    for ($i = 0; $i < $eventIdsCount; $i++) {
+      $sql .= "{$eventsId[$i]['event_id']}";
+      if ($i < $eventIdsCount - 1) {
+        $sql .= ",";
+      }
+    }
+
+    $sql .= ") ORDER BY event_id LIMIT {$limit} OFFSET {$offset}";
+
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+    $events = $stmt->fetchAll();
+
+    for ($i = 0; $i < count($events); $i++) {
+      $images = explode(",", $events[$i]["images"]);
+      $events[$i]["images"] = $images;
+    }
+
+    return $events;
+  }
+
+  public static function getEventsOrganizer($userId)
+  {
+    $connection = Connection::get();
+    $sql = "SELECT event_id FROM event WHERE user_id = :user_id";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":user_id", $userId);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
 }

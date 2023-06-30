@@ -14,13 +14,13 @@
           </a>
         </li>
         <li class="nav-item">
-          {% if user["user_type"] == 'organizer' %}
+          {% if loged_user["user_type"] == 'organizer' %}
           <a class="nav-link" href="/sistema-cadastro-eventos/event/create">
             <i class="bi bi-plus"></i>
             Criar evento
           </a>
-          {% elseif user["user_type"] == 'participant' %}
-          <a class="nav-link" href="/sistema-cadastro-eventos/user/{{ user_id }}">
+          {% elseif loged_user["user_type"] == 'participant' %}
+          <a class="nav-link" href="/sistema-cadastro-eventos/user/{{ user_id }}/0">
             <i class="bi bi-bookmark"></i>
             Meus eventos
           </a>
@@ -34,10 +34,10 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person"></i>
-            {{ user["name"] }}
+            {{ loged_user["name"] }}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/sistema-cadastro-eventos/user/{{ user_id }}">Meu perfil</a></li>
+            <li><a class="dropdown-item" href="/sistema-cadastro-eventos/user/index/{{ loged_user['user_id'] }}">Meu perfil</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
