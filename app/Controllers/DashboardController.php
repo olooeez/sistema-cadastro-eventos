@@ -12,9 +12,9 @@ class DashboardController
     $events = EventModel::getAllEventsByPage($pageToLoad);
     $categories = CategoryModel::getAllCategories();
     $parameters["categories"] = $categories;
-    $parameters["user"] = $_SESSION["user"] ?? null;
+    $parameters["loged_user"] = $_SESSION["user"] ?? null;
     $parameters["events"] = $events;
-    $parameters["total_num_events"] = count($events);
+    $parameters["total_num_events"] = count($events) - 1;
     $parameters["current_page"] = $pageToLoad;
     return $template->render($parameters);
   }

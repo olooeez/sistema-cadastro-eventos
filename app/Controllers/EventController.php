@@ -13,11 +13,11 @@ class EventController
     $searchedEvents =  EventModel::getSpecificsEventsByPageAndCategory($searchName, $pageToLoad, $categoryName);
     $categories = CategoryModel::getAllCategories();
     $parameters["categories"] = $categories;
-    $parameters["total_num_events"] = count($searchedEvents);
+    $parameters["total_num_events"] = count($searchedEvents) - 1;
     $parameters["events"] = $searchedEvents;
     $parameters["category"] = $categoryName;
     $parameters["search_name"] = $searchName;
-    $parameters["user"] = $_SESSION["user"] ?? null;
+    $parameters["loged_user"] = $_SESSION["user"] ?? null;
     return $template->render($parameters);
   }
 }

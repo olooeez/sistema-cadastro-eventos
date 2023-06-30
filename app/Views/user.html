@@ -1,0 +1,56 @@
+{% extends "Templates/base.html" %}
+{% block title %}Pefil de {{ user["name"] }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="d-flex flex-column align-items-center flex-wrap justify-content-center mt-4">
+    <strong class="fs-2 fw-normal">{{ user["name"] }}</strong>
+    <span class="fs-4 fw-light"> {{ user["user_type"] }} </span>
+  </div>
+  <hr>
+  {% if event is not empty %}
+  <div class="text-center">
+    <strong class="fs-3 fw-normal">{{ user["user_type"] == 'participant' ? 'Eventos que está inscrito' : 'Eventos que
+      criou' }}</strong>
+  </div>
+  {% else %}
+  <div class="text-center">
+    <strong class="fs-3 fw-normal">Nenhum evento em seu perfil</strong>
+  </div>
+  {% endif %}
+  <section class="my-4 d-flex justify-content-evenly flex-wrap">
+    {% for event in events %}
+    <div class="card bg-body-tertiary m-3" style="width: 18rem;">
+      <img src="{{ event['images'][0] }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ event["title"] }}</h5>
+        <p class="card-text">{{ event["description"] }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-body-tertiary">
+            <i class="bi bi-alarm me-2"></i>
+            <span>{{ event["date"] }} às {{ event["time"] }}</span>
+          </li>
+          <li class="list-group-item bg-body-tertiary">
+            <i class="bi bi-geo-alt me-2"></i>
+            <span>{{ event["location"] }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="/sistema-cadastro-eventos/event/{{ event['event_id'] }}" class="btn btn-primary">Ver o evento</a>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <nav class="d-flex justify-content-center" style="margin: 25px;">
+    <ul class="pagination">
+      {% if total_num_events > 1 %}
+      {% for i in 0..total_num_events-1 %}
+      <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
+          href="/sistema-cadastro-eventos/user/index/{{ user['user_id'] }}/{{ i }}">{{ i+1 }}</a>
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}
