@@ -116,4 +116,26 @@ abstract class EventModel
     $stmt->execute();
     return $stmt->fetchAll();
   }
+
+  public static function Insert($titulo,$Preco,$Data,$Horario,$Localizacao,$category,$Imagem,$Descricao,$userId){
+    $connection = Connection::get();
+    $sql = "INSERT INTO event (title, description, date, time, location, category_id, user_id, price, images) 
+    VALUES (:title, :description, :date, :time, :location, :category_id, :user_id, :price, :images)";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":title",$titulo);
+    $stmt->bindValue(":price",$Preco);
+    $stmt->bindValue(":date",$Data);
+    $stmt->bindValue(":time",$Horario);
+    $stmt->bindValue(":location",$Localizacao);
+    $stmt->bindValue(":category_id",$category);
+    $stmt->bindValue(":images",$Imagem);
+    $stmt->bindValue(":description",$Descricao);
+    $stmt->bindValue(":user_id",$userId);
+    if($stmt->execute()){
+        return $connection->lastInsertId();
+    }else{
+        return false;
+    }
+    
+  }
 }

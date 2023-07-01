@@ -15,7 +15,7 @@
         </li>
         <li class="nav-item">
           {% if loged_user["user_type"] == 'organizer' %}
-          <a class="nav-link" href="/sistema-cadastro-eventos/event/create">
+          <a class="nav-link" href="/sistema-cadastro-eventos/event/create" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="bi bi-plus"></i>
             Criar evento
           </a>
@@ -58,3 +58,4 @@
     </form>
   </div>
 </nav>
+{{ include("Includes/createEventModal.html") }}
