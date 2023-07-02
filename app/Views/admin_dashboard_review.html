@@ -1,0 +1,42 @@
+{% extends "Templates/base.html" %}
+{% block title %}Admin dashboard{% endblock %}
+{% block content %}
+{{ include("Includes/navbar_admin.html") }}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Comentário</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews %}
+      <tr>
+        <th scope="row">{{ review["review_id"] }}</th>
+        <td>{{ review["comment"] }}</td>
+        <td>
+          <button id="_event" data-bs-toggle="modal" data-tabela="review" data-valor="{{ review['review_id'] }}"
+            data-bs-target="#delete_row_modal" type="button" class="btn btn-danger">
+            <i class="bi bi-trash"></i>
+            Deletar
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <nav class="d-flex justify-content-center" style="margin: 25px;">
+    <ul class="pagination">
+      {% if total_num_reviews >= 1 %}
+      {% for i in 0..total_num_reviews %}
+      <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
+          href="/sistema-cadastro-eventos/admin/review/{{ i }}">{{ i+1 }}</a>
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}

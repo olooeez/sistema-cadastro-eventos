@@ -57,7 +57,17 @@ abstract class UserModel
     $stmt->execute();
     return $stmt->fetch();
   }
+  public static function getAllUsersByPage($page)
+  {
+    $connection = Connection::get();
+    $offset = $page * 3;
+    $sql = "SELECT * FROM user LIMIT 3 OFFSET {$offset}";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+    $users = $stmt->fetchAll();
 
+    return $users;
+  }
   private static function alreadyInDB($email)
   {
     $connection = Connection::get();
@@ -77,5 +87,23 @@ abstract class UserModel
     $stmt->bindValue(":id", $userId);
     $stmt->execute();
     return $stmt->fetch();
+  }
+  public static function getNumOfUsers()
+  {
+    $connection = Connection::get();
+    $sql = "SELECT count(*) AS total FROM user";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return $result["total"];
+  }
+
+  public static function delete($id)
+  {
+    $connection = Connection::get();
+    $deleteUserSql = "DELETE FROM user WHERE user_id = :user_id";
+    $stmt = $connection->prepare($deleteUserSql);
+    $stmt->bindValue(":user_id", $id);
+    return $stmt->execute();
   }
 }

@@ -16,6 +16,7 @@ require_once(__DIR__ . "/app/Models/UserModel.php");
 require_once(__DIR__ . "/app/Models/EventModel.php");
 require_once(__DIR__ . "/app/Models/CategoryModel.php");
 require_once(__DIR__ . "/lib/Luiz/Database/Connection.php");
-
+require_once(__DIR__ . "/app/Controllers/AdminController.php");
+require_once(__DIR__ . "/app/Models/ReviewModel.php");
 $core = new Core;
 echo $core->start($_GET);

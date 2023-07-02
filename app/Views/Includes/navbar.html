@@ -20,12 +20,12 @@
             Criar evento
           </a>
           {% elseif loged_user["user_type"] == 'participant' %}
-          <a class="nav-link" href="/sistema-cadastro-eventos/user/{{ user_id }}/0">
+          <a class="nav-link" href="/sistema-cadastro-eventos/user/index/{{ loged_user['user_id'] }}">
             <i class="bi bi-bookmark"></i>
             Meus eventos
           </a>
           {% else %}
-          <a class="nav-link" href="/sistema-cadastro-eventos/admin/dashboard">
+          <a class="nav-link" href="/sistema-cadastro-eventos/admin">
             <i class="bi bi-nut"></i>
             Painel do admin
           </a>
@@ -58,4 +58,4 @@
     </form>
   </div>
 </nav>
-{{ include("Includes/createEventModal.html") }}
+{{ include("Includes/create_event_modal.html") }}

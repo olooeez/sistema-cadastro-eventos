@@ -1,0 +1,21 @@
+<div class="modal fade" id="delete_row_modal" tabindex="-1" aria-labelledby="delete_row_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="delete_row_modal_title">Deletar Evento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <strong id="delete_row_modal_question">Tem certeza que deseja deletar o evento? </strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a id="delete_row_modal_accept" href="/sistema-cadastro-eventos/admin/evento/delete/{{event['event_id']}}"
+          class="btn btn-danger">
+          <i class="bi bi-trash"></i>
+          Deletar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
