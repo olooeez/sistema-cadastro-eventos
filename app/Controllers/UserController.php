@@ -18,6 +18,8 @@ class UserController
       $eventsId = EventModel::getEventsRegistrated($userId);
     } else if ($user["user_type"] === 'organizer') {
       $eventsId = EventModel::getEventsOrganizer($userId);
+    } else {
+      $eventsId = [];
     }
 
     $pageToLoad = isset($args[1]) ? intval($args[1]) : 0;
