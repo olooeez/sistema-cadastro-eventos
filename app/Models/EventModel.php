@@ -138,4 +138,30 @@ abstract class EventModel
     }
     
   }
+
+  public static function Delete($ID)
+  {
+    $connection = Connection::get();
+    $connection->beginTransaction();
+
+    try {
+        // Exclui os registros relacionados na tabela `review`
+        $deleteReviewSql = "DELETE FROM review WHERE event_id = :event_id";
+        $stmt = $connection->prepare($deleteReviewSql);
+        $stmt->bindValue(":event_id", $ID);
+        $stmt->execute();
+
+        // Exclui o registro na tabela `event`
+        $deleteEventSql = "DELETE FROM event WHERE event_id = :event_id";
+        $stmt = $connection->prepare($deleteEventSql);
+        $stmt->bindValue(":event_id", $ID);
+        $stmt->execute();
+
+        $connection->commit();
+        return true;
+    } catch (PDOException $e) {
+        $connection->rollBack();
+        return false;
+    }
+  }
 }

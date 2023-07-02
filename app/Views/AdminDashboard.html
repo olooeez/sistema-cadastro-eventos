@@ -1,0 +1,198 @@
+{% extends "Templates/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+    <table id="eventTable" class="table">
+        <div class="d-flex justify-content-center mt-4">
+            <div class="row">
+                <div class="col">
+                    <button id="showEventsButton" class="btn btn-primary">
+                        <i class="bi bi-bookmarks"></i>Eventos
+                    </button>
+                    <button id="showUsersButton" class="btn btn-primary">
+                        <i class="bi bi-person"></i>Usuários
+                    </button>
+                    <button id="showReviewsButton" class="btn btn-primary">
+                        <i class="bi bi-bar-chart-line"></i>Reviews
+                    </button>
+                    <button id="showCategoriesButton" class="btn btn-primary">
+                        <i class="bi bi-tags"></i>Categorias
+                    </button>
+                </div>
+            </div>
+        </div>
+</div>
+</label>
+<thead>
+    <tr>
+        <th scope="col">#Index</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Ação</th>
+    </tr>
+</thead>
+<tbody>
+    {% for event in events %}
+    <tr>
+        <th scope="row">{{ event["event_id"] }}</th>
+        <td>{{ event["title"] }}</td>
+        <td><button type="button" class="btn btn-success me-2">
+                <i class="bi bi-pencil"></i>
+                Editar
+            </button>
+            <button id="_event" data-bs-toggle="modal" data-tabela="event" data-valor="{{ event['event_id'] }}" data-bs-target="#deleteEventModal" type="button" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+                Deletar
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<table id="userTable" class="table" style="display: none;">
+    <thead>
+        <tr>
+            <th scope="col">#Index</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{ user["user_id"] }}</th>
+            <td>{{ user["name"] }}</td>
+            <td><button type="button" class="btn btn-success me-2">
+                    <i class="bi bi-pencil"></i>
+                    Editar
+                </button>
+                <button data-bs-toggle="modal" data-tabela="user" data-valor="{{ user['user_id'] }}" data-bs-target="#deleteEventModal" type="button" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                    Deletar
+                </button>
+            </td>
+            {% endfor %}
+    </tbody>
+</table>
+<table id="reviewTable" class="table" style="display: none;">
+    <thead>
+        <tr>
+            <th scope="col">#Index</th>
+            <th scope="col">#User Index</th>
+            <th scope="col">Comentario</th>
+            <th scope="col">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviews %}
+        <tr>
+            <th scope="row">{{ review["review_id"] }}</th>
+            <th scope="row">{{ review["user_id"] }}</th>
+            <td>{{ review["comment"] }}</td>
+            <td><button type="button" class="btn btn-success me-2">
+                    <i class="bi bi-pencil"></i>
+                    Editar
+                </button>
+                <button data-bs-toggle="modal" data-tabela="review" data-valor="{{ review['review_id'] }}" data-bs-target="#deleteEventModal" type="button" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                    Deletar
+                </button>
+            </td>
+            {% endfor %}
+    </tbody>
+</table>
+
+<table id="categoryTable" class="table" style="display: none;">
+    <thead>
+        <tr>
+            <th scope="col">#Index</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <th scope="row">{{ category["category_id"] }}</th>
+            <td>{{ category["name"] }}</td>
+            <td><button type="button" class="btn btn-success me-2">
+                    <i class="bi bi-pencil"></i>
+                    Editar
+                </button>
+                <button data-bs-toggle="modal" data-bs-target="#deleteEventModal"
+                    data-tabela="category" data-valor="{{ category['category_id'] }}" type="button" class="btn btn-danger">
+                    <i class="bi bi-trash"></i>
+                    Deletar
+                </button>
+            </td>
+            {% endfor %}
+    </tbody>
+</table>
+
+<nav id="categoriesNavBar" class="d-flex justify-content-center" style="margin: 25px;">
+    <ul class="pagination">
+        {% if total_num_events >= 0 %}
+        {% for i in 0..total_num_events %}
+        <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
+                href="/sistema-cadastro-eventos/admin/index/{{ i }}">{{ i+1 }}</a>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+</nav>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function (e) {
+        $('#deleteEventModal').on('shown.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botão que disparou o modal
+            var ID = button.data('valor'); // Recupera o valor do atributo de dados "data-valor"
+            var tabela = button.data('tabela');
+            console.log(ID);
+            console.log(tabela);
+            // Atualize os elementos dentro do modal com o valor do category_id
+            $('.modal-footer #botaoDelete').attr('href', 'http://localhost/sistema-cadastro-eventos/admin/' + tabela +"/delete/"+ ID);
+
+        });
+    });
+    $(document).ready(function () {
+        // Ao clicar no botão "Mostrar Usuários"
+        $('#showUsersButton').click(function () {
+            // Oculta a tabela de eventos
+            $('#categoryTable').hide();
+            $('#eventTable').hide();
+            $('#reviewTable').hide();
+            $('#userTable').show();
+
+        });
+
+        // Ao clicar no botão "Mostrar Eventos"
+        $('#showEventsButton').click(function () {
+            // Exibe a tabela de eventos
+            $('#categoryTable').hide();
+            $('#reviewTable').hide();
+            $('#userTable').hide();
+            $('#eventTable').show();
+        });
+
+        $('#showReviewsButton').click(function () {
+            // Exibe a tabela de eventos
+            $('#categoryTable').hide();
+            $('#eventTable').hide();
+            $('#userTable').hide();
+            $('#reviewTable').show();
+        });
+
+        $('#showCategoriesButton').click(function () {
+            // Exibe a tabela de eventos
+            $('#reviewTable').hide();
+            $('#eventTable').hide();
+            $('#userTable').hide();
+            $('#categoryTable').show();
+        });
+
+    });
+</script>
+{{ include("Includes/deleteEventModal.html") }}
+{% endblock %}

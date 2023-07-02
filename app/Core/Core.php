@@ -41,7 +41,7 @@ class Core
     }
 
     if ($this->user) {
-      $pagesPermission = ["DashboardController", "EventController", "UserController"];
+      $pagesPermission = ["DashboardController", "EventController", "UserController","AdminController"];
 
       if (!isset($this->controller) || !in_array($this->controller, $pagesPermission)) {
         $this->controller = "DashboardController";
