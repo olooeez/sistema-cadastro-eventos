@@ -48,7 +48,7 @@
     </div>
     <form action="/sistema-cadastro-eventos/event/list" method="post" class="input-group" style="width: auto;" role="search">
       <span class="input-group-text">Evento e categoria</span>
-      <input name="name" type="text" class="form-control">
+      <input name="name" type="text" class="form-control" required>
       <select name="category" class="form-select" aria-label="Default select example">
         {% for category in categories %}
         <option value="{{ category['name'] }}" {{ category['name'] == 'Todas' ? 'selected' : '' }}>{{ category["name"] }}</option>

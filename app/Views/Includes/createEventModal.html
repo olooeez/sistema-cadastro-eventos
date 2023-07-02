@@ -1,84 +1,70 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Criar Evento</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Criar Evento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form enctype="multipart/form-data" id="cadastroEvento" action="/sistema-cadastro-eventos/event/create"
+          method="post">
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="title" class="form-label">Titulo</label>
+                <input type="text" name="title" id="title" class="form-control py-2" required>
+              </div>
             </div>
-            <div class="modal-body">
-                <form enctype="multipart/form-data" id="cadastroEvento" action="/sistema-cadastro-eventos/event/create" method="post" >
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="Titulo" class="form-label">Titulo</label>
-                                <input type="Titulo" name="Titulo" id="Titulo" class="form-control py-2" required>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="Preço" class="form-label">Preço</label>
-                                <input type="text" name="Preço" id="currency-field" class="form-control py-2"
-                                    pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency"
-                                    placeholder="$1,000,00" required>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="Data" class="form-label">Data</label>
-                                <input type="date" name="Data" id="Data" class="form-control py-2" required>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="Horario" class="form-label">Horario</label>
-                                <input type="time" name="Horario" id="Horario" class="form-control py-2" required>
-                            </div>
-                        </div>
-                    </div>
-                    <!--
-                    <div class="row">
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-                            
-                        </div>
-                    </div>
-                    -->
-                    <div class="mb-3 dropdown">
-                        <label for="Localização" class="form-label">Localização</label>
-                        <input type="Localização" name="Localização" id="Localização" class="form-control py-2"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="Categoria" class="form-label">Categoria</label>
-                        <select name="category" class="form-select" aria-label="Default select example">
-                            {% for category in categories %}
-                            <option name="{{ category['category_id'] }}" value="{{ category['name'] }}" {{ category['name'] == 'Todas' ? 'selected' : '' }}>{{ category["name"] }}</option>
-                            {% endfor %}
-                          </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Imagem" class="form-label">Imagem</label>
-                        <input name="Imagem" type="file" class="form-control" id="inputGroupFile01">
-                      </div>
-                      <div class="mb-3">
-                        <label for="Descrição" class="form-label">Descrição</label>
-                        <input type="Descrição" name="Descrição" id="Descrição" class="form-control py-2"
-                            required>
-                    </div>
-                </form>
+            <div class="col">
+              <div class="mb-3">
+                <label for="price" class="form-label">Preço</label>
+                <input type="text" name="price" id="price" class="form-control py-2"
+                  pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" placeholder="$1,000,00" required>
+              </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button form="cadastroEvento" type="submit" class="btn btn-primary">Cadastrar</button>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input type="date" name="date" id="date" class="form-control py-2" required>
+              </div>
             </div>
-        </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="time" class="form-label">Horario</label>
+                <input type="time" name="time" id="time" class="form-control py-2" required>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 dropdown">
+            <label for="locale" class="form-label">Localização</label>
+            <input type="text" name="locale" id="locale" class="form-control py-2" required>
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Categoria</label>
+            <select name="category" class="form-select">
+              {% for category in categories %}
+              <option name="{{ category['category_id'] }}" value="{{ category['name'] }}" {{ category['name']=='Todas'
+                ? 'selected' : '' }}>{{ category["name"] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="image[]" class="form-label">Imagem</label>
+            <input name="image[]" type="file" class="form-control" id="image[]" multiple>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descrição</label>
+            <input type="text" name="description" id="description" class="form-control py-2" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button form="cadastroEvento" type="submit" class="btn btn-primary">Cadastrar</button>
+      </div>
     </div>
+  </div>
 </div>
