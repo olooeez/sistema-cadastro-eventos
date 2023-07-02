@@ -20,7 +20,7 @@
   <section class="my-4 d-flex justify-content-evenly flex-wrap">
     {% for event in events %}
     <div class="card bg-body-tertiary m-3" style="width: 18rem;">
-      <img src="{{ event['images'][0] }}" class="card-img-top" alt="...">
+      <img src="/sistema-cadastro-eventos/{{ event['images'][0] }}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ event["title"] }}</h5>
         <p class="card-text">{{ event["description"] }}</p>
@@ -43,7 +43,7 @@
   </section>
   <nav class="d-flex justify-content-center" style="margin: 25px;">
     <ul class="pagination">
-      {% if total_num_events > 1 %}
+      {% if total_num_events >= 1 %}
       {% for i in 0..total_num_events-1 %}
       <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
           href="/sistema-cadastro-eventos/user/index/{{ user['user_id'] }}/{{ i }}">{{ i+1 }}</a>

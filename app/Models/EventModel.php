@@ -117,51 +117,35 @@ abstract class EventModel
     return $stmt->fetchAll();
   }
 
-  public static function Insert($titulo,$Preco,$Data,$Horario,$Localizacao,$category,$Imagem,$Descricao,$userId){
-    $connection = Connection::get();
-    $sql = "INSERT INTO event (title, description, date, time, location, category_id, user_id, price, images) 
-    VALUES (:title, :description, :date, :time, :location, :category_id, :user_id, :price, :images)";
-    $stmt = $connection->prepare($sql);
-    $stmt->bindValue(":title",$titulo);
-    $stmt->bindValue(":price",$Preco);
-    $stmt->bindValue(":date",$Data);
-    $stmt->bindValue(":time",$Horario);
-    $stmt->bindValue(":location",$Localizacao);
-    $stmt->bindValue(":category_id",$category);
-    $stmt->bindValue(":images",$Imagem);
-    $stmt->bindValue(":description",$Descricao);
-    $stmt->bindValue(":user_id",$userId);
-    if($stmt->execute()){
-        return $connection->lastInsertId();
-    }else{
-        return false;
-    }
-    
-  }
-
-  public static function Delete($ID)
+  public static function Insert($titulo, $Preco, $Data, $Horario, $Localizacao, $category, $Imagem, $Descricao, $userId)
   {
     $connection = Connection::get();
-    $connection->beginTransaction();
-
-    try {
-        // Exclui os registros relacionados na tabela `review`
-        $deleteReviewSql = "DELETE FROM review WHERE event_id = :event_id";
-        $stmt = $connection->prepare($deleteReviewSql);
-        $stmt->bindValue(":event_id", $ID);
-        $stmt->execute();
-
-        // Exclui o registro na tabela `event`
-        $deleteEventSql = "DELETE FROM event WHERE event_id = :event_id";
-        $stmt = $connection->prepare($deleteEventSql);
-        $stmt->bindValue(":event_id", $ID);
-        $stmt->execute();
-
-        $connection->commit();
-        return true;
-    } catch (PDOException $e) {
-        $connection->rollBack();
-        return false;
+    $sql = "INSERT INTO event (title, description, date, time, location, category_id, user_id, price, images)
+    VALUES (:title, :description, :date, :time, :location, :category_id, :user_id, :price, :images)";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":title", $titulo);
+    $stmt->bindValue(":price", $Preco);
+    $stmt->bindValue(":date", $Data);
+    $stmt->bindValue(":time", $Horario);
+    $stmt->bindValue(":location", $Localizacao);
+    $stmt->bindValue(":category_id", $category);
+    $stmt->bindValue(":images", $Imagem);
+    $stmt->bindValue(":description", $Descricao);
+    $stmt->bindValue(":user_id", $userId);
+    if ($stmt->execute()) {
+      return $connection->lastInsertId();
+    } else {
+      return false;
     }
+
+  }
+
+  public static function delete($id)
+  {
+    $connection = Connection::get();
+    $deleteEventSql = "DELETE FROM event WHERE event_id = :event_id";
+    $stmt = $connection->prepare($deleteEventSql);
+    $stmt->bindValue(":event_id", $id);
+    return $stmt->execute();
   }
 }

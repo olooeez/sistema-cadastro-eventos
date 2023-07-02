@@ -12,6 +12,7 @@ abstract class CategoryModel
     $stmt->execute();
     return $stmt->fetchAll();
   }
+
   public static function getAllCategoriesByPage($page)
   {
     $connection = Connection::get();
@@ -32,27 +33,23 @@ abstract class CategoryModel
     $stmt->execute();
     return $stmt->fetch()["category_id"];
   }
-  public static function Delete($ID)
+
+  public static function getNumCategories()
   {
     $connection = Connection::get();
-    $connection->beginTransaction();
+    $sql = "SELECT count(*) AS total FROM category";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return $result["total"];
+  }
 
-    try {
-      $deleteEventSql = "DELETE FROM event WHERE event_id = :event_id";
-      $stmt = $connection->prepare($deleteEventSql);
-      $stmt->bindValue(":event_id", $ID);
-      $stmt->execute();
-
-      $deleteReviewSql = "DELETE FROM category WHERE category_id = :category_id";
-      $stmt = $connection->prepare($deleteReviewSql);
-      $stmt->bindValue(":category_id", $ID);
-      $stmt->execute();
-
-      $connection->commit();
-      return true;
-    } catch (PDOException $e) {
-      $connection->rollBack();
-      return false;
-    }
+  public static function delete($id)
+  {
+    $connection = Connection::get();
+    $deleteCategorySql = "DELETE FROM category WHERE category_id = :category_id";
+    $stmt = $connection->prepare($deleteCategorySql);
+    $stmt->bindValue(":category_id", $id);
+    return $stmt->execute();
   }
 }

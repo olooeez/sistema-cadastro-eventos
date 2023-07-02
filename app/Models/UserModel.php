@@ -98,33 +98,12 @@ abstract class UserModel
     return $result["total"];
   }
 
-  public static function Delete($ID)
+  public static function delete($id)
   {
     $connection = Connection::get();
-    $connection->beginTransaction();
-
-    try {
-
-      $deleteReviewSql = "DELETE FROM review WHERE review_id = :review_id";
-      $stmt = $connection->prepare($deleteReviewSql);
-      $stmt->bindValue(":review_id", $ID);
-      $stmt->execute();
-
-      $deleteReviewSql = "DELETE FROM registration WHERE registration_id = :registration_id";
-      $stmt = $connection->prepare($deleteReviewSql);
-      $stmt->bindValue(":registration_id", $ID);
-      $stmt->execute();
-
-      $deleteReviewSql = "DELETE FROM user WHERE user_id = :user_id";
-      $stmt = $connection->prepare($deleteReviewSql);
-      $stmt->bindValue(":user_id", $ID);
-      $stmt->execute();
-
-      $connection->commit();
-      return true;
-    } catch (PDOException $e) {
-      $connection->rollBack();
-      return false;
-    }
+    $deleteUserSql = "DELETE FROM user WHERE user_id = :user_id";
+    $stmt = $connection->prepare($deleteUserSql);
+    $stmt->bindValue(":user_id", $id);
+    return $stmt->execute();
   }
 }

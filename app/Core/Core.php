@@ -41,7 +41,11 @@ class Core
     }
 
     if ($this->user) {
-      $pagesPermission = ["DashboardController", "EventController", "UserController","AdminController"];
+      $pagesPermission = ["DashboardController", "EventController", "UserController"];
+
+      if ($this->user['user_type'] === 'administrator') {
+        array_push($pagesPermission, "AdminController");
+      }
 
       if (!isset($this->controller) || !in_array($this->controller, $pagesPermission)) {
         $this->controller = "DashboardController";

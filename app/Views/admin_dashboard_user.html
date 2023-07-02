@@ -1,0 +1,42 @@
+{% extends "Templates/base.html" %}
+{% block title %}Admin dashboard{% endblock %}
+{% block content %}
+{{ include("Includes/navbar_admin.html") }}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">{{ user["user_id"] }}</th>
+        <td>{{ user["name"] }}</td>
+        <td>
+          <button data-bs-toggle="modal" data-tabela="user" data-valor="{{ user['user_id'] }}"
+            data-bs-target="#delete_row_modal" type="button" class="btn btn-danger">
+            <i class="bi bi-trash"></i>
+            Deletar
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <nav class="d-flex justify-content-center" style="margin: 25px;">
+    <ul class="pagination">
+      {% if total_num_users >= 1 %}
+      {% for i in 0..total_num_users %}
+      <li class="page-item {{ i == current_page ? 'active' : '' }} "><a class="page-link"
+          href="/sistema-cadastro-eventos/admin/user/{{ i }}">{{ i+1 }}</a>
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+{% endblock %}
