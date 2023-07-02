@@ -15,15 +15,16 @@ class UserController
     $parameters["loged_user"] = $_SESSION["user"] ?? null;
 
     if ($user["user_type"] === 'participant') {
-      $eventsId = EventModel::getEventsRegistrated($user["user_id"]);
+      $eventsId = EventModel::getEventsRegistrated($userId);
     } else if ($user["user_type"] === 'organizer') {
-      $eventsId = EventModel::getEventsOrganizer($user["user_id"]);
+      $eventsId = EventModel::getEventsOrganizer($userId);
     }
 
     $pageToLoad = isset($args[1]) ? intval($args[1]) : 0;
     $events = EventModel::getEventsByPage($eventsId, $pageToLoad);
-    $parameters["total_num_events"] = count($events) - 1;
+    $parameters["total_num_events"] = ceil((count($eventsId) / 3)) - 1;
     $parameters["events"] = $events;
+    $parameters["current_page"] = $pageToLoad;
     return $template->render($parameters);
   }
 

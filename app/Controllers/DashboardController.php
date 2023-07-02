@@ -14,7 +14,7 @@ class DashboardController
     $parameters["categories"] = $categories;
     $parameters["loged_user"] = $_SESSION["user"] ?? null;
     $parameters["events"] = $events;
-    $parameters["total_num_events"] = count($events) - 1;
+    $parameters["total_num_events"] = ceil((EventModel::getNumOfEvents() / 3)) - 1;
     $parameters["current_page"] = $pageToLoad;
     return $template->render($parameters);
   }
