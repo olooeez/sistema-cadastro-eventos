@@ -2,6 +2,23 @@
 
 class EventController
 {
+  public function index($params)
+  {
+    $loader = new \Twig\Loader\FilesystemLoader("app/Views");
+    $twig = new \Twig\Environment($loader, ["auto_reload" => true]);
+    $template = $twig->load("event.html");
+    $categories = CategoryModel::getAllCategories();
+    $eventId = intval($params[0]);
+    $pageToLoad = isset($params[1]) ? intval($params[1]) : 0;
+    $event = EventModel::getEvent($eventId);
+    $reviews = ReviewModel::getAllReviewsByPageEventId($pageToLoad, $eventId);
+    $parameters["reviews"] = $reviews;
+    $parameters["event"] = $event;
+    $parameters["categories"] = $categories;
+    $parameters["loged_user"] = $_SESSION["user"] ?? null;
+    return $template->render($parameters);
+  }
+
   public function list($page)
   {
     $loader = new \Twig\Loader\FilesystemLoader("app/Views");

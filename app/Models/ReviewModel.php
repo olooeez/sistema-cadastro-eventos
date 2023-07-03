@@ -12,7 +12,18 @@ abstract class ReviewModel
     $stmt = $connection->prepare($sql);
     $stmt->execute();
     $reviews = $stmt->fetchAll();
+    return $reviews;
+  }
 
+  public static function getAllReviewsByPageEventId($page, $eventId)
+  {
+    $connection = Connection::get();
+    $offset = $page * 3;
+    $sql = "SELECT * FROM review WHERE event_id = :event_id LIMIT 3 OFFSET {$offset}";
+    $stmt = $connection->prepare($sql);
+    $stmt->bindValue(":event_id", $eventId);
+    $stmt->execute();
+    $reviews = $stmt->fetchAll();
     return $reviews;
   }
 

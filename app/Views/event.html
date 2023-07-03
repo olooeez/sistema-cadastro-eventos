@@ -1,0 +1,90 @@
+{% extends "Templates/base.html" %}
+{% block title %}Página do evento{% endblock %}
+{% block content %}
+<style>
+  .carousel-item {
+    height: 32rem;
+    background-color: black;
+    color: white;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .carousel-item>.container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 50px;
+  }
+
+  .overlay-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.5;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: none !important;
+  }
+
+  .carousel-caption {
+    color: white !important;
+  }
+</style>
+<div id="event_carousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <button type="button" data-bs-target="#event_carousel" data-bs-slide-to="0" class="active" aria-current="true"
+      aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#event_carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+  </ol>
+  <div class="carousel-inner">
+    {% for image in event["images"] %}
+    <div class="carousel-item active">
+      <div class="overlay-image" style="background-image: url(/sistema-cadastro-eventos/{{ image }});">
+      </div>
+      <div class="container">
+      </div>
+      <div class="carousel-caption d-none d-md-block">
+        <h2>{{ event['title'] }}</h2>
+        <h3>{{ event['description'] }}</h3>
+      </div>
+    </div>
+    {% endfor %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#event_carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#event_carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+<div class="row my-4">
+  <div class="col m-3">
+    <div class="container text-begin">
+      <h2>Quer entrar no evento?</h2>
+      <button class="btn btn-ln btn-primary mt-3">
+        Entrar por R${{ event["price"] }}
+      </button>
+    </div>
+  </div>
+  <div class="col m-3">
+    <div class="container text-begin">
+      <h2>Comentarios</h2>
+      {% for review in reviews %}
+      <hr>
+      <p>{{ review["comment"] }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

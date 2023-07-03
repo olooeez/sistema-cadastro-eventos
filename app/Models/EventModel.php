@@ -146,4 +146,17 @@ abstract class EventModel
     $stmt->bindValue(":event_id", $id);
     return $stmt->execute();
   }
+
+  public static function getEvent($id)
+  {
+    $connection = Connection::get();
+    $selectEventSql = "SELECT * FROM event WHERE event_id = :event_id";
+    $stmt = $connection->prepare($selectEventSql);
+    $stmt->bindValue(":event_id", $id);
+    $stmt->execute();
+    $event = $stmt->fetch();
+    $images = explode(",", $event["images"]);
+    $event["images"] = $images;
+    return $event;
+  }
 }
