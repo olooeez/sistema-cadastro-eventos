@@ -10,9 +10,9 @@ O Sistema de Cadastro de Eventos é um projeto desenvolvido em PHP, HTML, CSS, J
 
 Certifique-se de que você possui os seguintes programas instalados em sua máquina:
 
-1. **XAMPP**: O XAMPP é um pacote que contém o servidor web Apache, o banco de dados MySQL, o interpretador de linguagem de script PHP e outros componentes necessários para executar o projeto. Você pode baixar o XAMPP em [https://www.apachefriends.org/](https://www.apachefriends.org/) e siga as instruções de instalação adequadas para o seu sistema operacional.
+1. **XAMPP**: O XAMPP é um pacote que contém o servidor web Apache, o banco de dados MySQL, o interpretador de linguagem de script PHP e outros componentes necessários para executar o projeto. Você pode baixar o XAMPP através do site [Apache Friends](https://www.apachefriends.org/) e siga as instruções de instalação adequadas para o seu sistema operacional.
 
-2. **Composer**: O Composer é uma ferramenta de gerenciamento de dependências para o PHP. Você pode baixar e instalar o Composer em [https://getcomposer.org/](https://getcomposer.org/). Siga as instruções de instalação apropriadas para o seu sistema operacional.
+2. **Composer**: O Composer é uma ferramenta de gerenciamento de dependências para o PHP. Você pode baixar e instalar o Composer através do site [Get Composer](https://getcomposer.org/). Siga as instruções de instalação apropriadas para o seu sistema operacional.
 
 ## Instalação e desenvolvimento
 
@@ -54,7 +54,7 @@ host="localhost:3306"
 
 O projeto contém scripts que são responsáveis por criar as tabelas do banco de dados e preencher algumas informações iniciais (dados falsos ou seeds). Navegue até a pasta "scripts" e copie e cole no seu cliente MySQL como o PhpMyAdmin ou a linha de comando.
 
-Após seguir esses passos, o projeto estará configurado e pronto para ser executado. Você pode acessá-lo no seu navegador usando a URL [http://localhost/sistema-cadastro-eventos](http://localhost/sistema-cadastro-eventos).
+Após seguir esses passos, o projeto estará configurado e pronto para ser executado. Você pode acessá-lo no seu navegador usando o [localhost](http://localhost/sistema-cadastro-eventos).
 
 ## Contribuindo
 
