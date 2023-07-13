@@ -50,8 +50,9 @@
       <span class="input-group-text">Evento e categoria</span>
       <input name="name" type="text" class="form-control" required>
       <select name="category" class="form-select" aria-label="Default select example">
+        <option value="Todas" selected>Todas</option>
         {% for category in categories %}
-        <option value="{{ category['name'] }}" {{ category['name'] == 'Todas' ? 'selected' : '' }}>{{ category["name"] }}</option>
+        <option value="{{ category['name'] }}">{{ category["name"] }}</option>
         {% endfor %}
       </select>
       <button type="submit" class="btn btn-primary">Procurar</button>
