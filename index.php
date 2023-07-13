@@ -12,6 +12,7 @@ require_once(__DIR__ . "/app/Controllers/DashboardController.php");
 require_once(__DIR__ . "/app/Controllers/RegisterController.php");
 require_once(__DIR__ . "/app/Controllers/EventController.php");
 require_once(__DIR__ . "/app/Controllers/UserController.php");
+require_once(__DIR__ . "/app/Controllers/ReviewController.php");
 require_once(__DIR__ . "/app/Models/UserModel.php");
 require_once(__DIR__ . "/app/Models/EventModel.php");
 require_once(__DIR__ . "/app/Models/CategoryModel.php");

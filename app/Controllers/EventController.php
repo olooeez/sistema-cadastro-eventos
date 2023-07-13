@@ -12,6 +12,8 @@ class EventController
     $pageToLoad = isset($params[1]) ? intval($params[1]) : 0;
     $event = EventModel::getEvent($eventId);
     $reviews = ReviewModel::getAllReviewsByPageEventId($pageToLoad, $eventId);
+    $parameters["total_num_events"] = ceil((ReviewModel::getNumReviews($eventId) / 3)) - 1;
+    $parameters["current_page"] = $pageToLoad;
     $parameters["reviews"] = $reviews;
     $parameters["event"] = $event;
     $parameters["categories"] = $categories;
