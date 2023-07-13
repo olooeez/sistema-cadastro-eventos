@@ -1,3 +1,5 @@
+CREATE OR REPLACE DATABASE SistemaCadastroEventosDB;
+
 USE SistemaCadastroEventosDB;
 
 CREATE OR REPLACE TABLE `user` (
